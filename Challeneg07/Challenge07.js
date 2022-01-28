@@ -97,9 +97,42 @@ const objLat = (obj) => {
 // ------------------------
 const cvFormatter = (arr) => {
   // write your code here
-  // no enough time
-};
+  let copyArr = [];
+  let x = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].yearsOfExperience > 1) {
+      copyArr[x] = arr[i];
+      x++;
+    }
+  }
 
+  //  let fullNameArray = exp.map(getFullname);
+  /*function getFullname(item){
+          return [item.firstName,item.astName].join(" ");
+      }
+      */
+
+  let finalArray = function (copyArr) {
+    return copyArr.map(function (rekey) {
+      let newObj = {};
+      if (rekey.firstName == null) {
+        newObj['fullName'] = rekey.lastName;
+        newObj['tech'] = rekey.tech;
+      } else if (rekey.lastName == null) {
+        newObj['fullName'] = rekey.firstName;
+        newObj['tech'] = rekey.tech;
+      } else {
+        newObj['fullName'] = `${rekey.firstName} ${rekey.lastName}`;
+        newObj['tech'] = rekey.tech;
+      }
+
+      return newObj;
+    });
+  };
+  let finallArraySave = finalArray(copyArr);
+
+  return finallArraySave;
+};
 // 3) ---------------------
 //
 //  Rekey wants to get statistic about the applicants
@@ -121,10 +154,40 @@ const cvFormatter = (arr) => {
 
 // ------------------------
 const applicationsStatics = (arr) => {
-  // write your code here
-  // no enough time
-};
+  let result = {
+    python_Devs: 0,
+    javaScript_Devs: 0,
+    dotNet_Devs: 0,
+    java_Devs: 0,
+    totalApplicants: 0,
+    rejectedApplicants: 0,
+  };
 
+  function isItMt(check) {
+    return check == null || check == ' ';
+  }
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].yearsOfExperience < 1) {
+      result.rejectedApplicants++;
+    } else if (isItMt(arr[i].firstName) || isItMt(arr[i].lastName)) {
+      result.rejectedApplicants++;
+    }
+  }
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].tech == 'JS') {
+      result.javaScript_Devs++;
+    } else if (arr[i].tech == 'Java') {
+      result.java_Devs++;
+    } else if (arr[i].tech == 'Python') {
+      result.python_Devs++;
+    } else if (arr[i].tech == '.Net') {
+      result.dotNet_Devs++;
+    }
+  }
+  result.totalApplicants = arr.length;
+  //console.log(result);
+  return result;
+};
 // 4) ---------------------
 //
 //  A Certain School principal wants to calculate the average score of each class in each grade in the school
@@ -150,9 +213,7 @@ let data = {
         {
           avg: 0,
           classNumber: '02',
-          classScores: [
-            87, 54, 95, 45, 41, 51, 25, 63, 58, 47, 64, 51, 98, 100,
-          ],
+          classScores: [87, 54, 95, 45, 41, 51, 25, 63, 58, 47, 64, 51, 98, 100],
         },
         {
           avg: 0,
@@ -205,9 +266,7 @@ let data = {
         {
           avg: 0,
           classNumber: '02',
-          classScores: [
-            100, 45, 70, 75, 87, 63, 39, 46, 54, 68, 74, 96, 52, 49,
-          ],
+          classScores: [100, 45, 70, 75, 87, 63, 39, 46, 54, 68, 74, 96, 52, 49],
         },
         {
           avg: 0,
@@ -217,9 +276,7 @@ let data = {
         {
           avg: 0,
           classNumber: '04',
-          classScores: [
-            64, 96, 66, 38, 78, 58, 43, 100, 34, 56, 82, 53, 89, 72,
-          ],
+          classScores: [64, 96, 66, 38, 78, 58, 43, 100, 34, 56, 82, 53, 89, 72],
         },
       ],
     },
@@ -229,9 +286,21 @@ let data = {
 //  Note that:
 //  1- This is not the exact data you will be getting every time and the solution should be dynamic
 //  2- You need to round the average to the nearest lower number
-
 const classesAvg = (data) => {
-  // no time yet :(
+  let sum = 0;
+
+  for (let i = 0; i < data.grades.length; i++) {
+    for (let x = 0; x < data.grades[i].numberOFClasses; x++) {
+      sum = data.grades[i].classes[x].classScores.reduce(function (a, b) {
+        return a + b;
+      }, 0);
+
+      data.grades[i].classes[x].avg = Math.floor(sum / data.grades[i].classes[x].classScores.length);
+    }
+    sum = 0;
+  }
+
+  return data;
 };
 
 module.exports = { objLat, cvFormatter, applicationsStatics, classesAvg };
