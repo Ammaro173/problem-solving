@@ -31,12 +31,16 @@ const arrInc = (arr) => {
 //
 // ------------------------
 const roundDecimals = (arr) => {
-  // write your code here
+  let result = [];
+  arr.forEach((num) => result.push(Math.round(num)));
+  return result;
 };
+//Another solution!
+// const roundDecimals = (arr) => arr.map((num) => Math.round(num));
 
 // 3) ---------------------
 //
-//  An owner of a factory want to give bounce 100$ for the employee of production department who worked *More than* 8 hours
+//  An owner of a factory want to give bounce (bonnus!) 100$ for the employee of production department who worked *More than* 8 hours
 //  and 50$ for those who worked less, given their data increase their salary and return the data back again
 //
 //  EX:
@@ -99,9 +103,18 @@ const roundDecimals = (arr) => {
 
 // ------------------------
 const employeesBonus = (arr) => {
-  // write your code here
+  return arr.map((ele) => {
+    if (ele.workHours > 8) {
+      ele.salary = parseFloat(ele.salary.slice(0, -1)) + 100 + '$';
+    } else {
+      ele.salary = parseFloat(ele.salary.slice(0, -1)) + 50 + '$';
+    }
+
+    return ele;
+  });
 };
 
+// console.log(employeesBonus(arr));
 // 4) ---------------------
 //
 // Harry wants to buy a new mouse and keyboard for his new setup
@@ -117,7 +130,19 @@ const employeesBonus = (arr) => {
 // ==> 200
 // ------------------------
 const mostExpensive = (budget, mouseArray, keyBoardArray) => {
-  // write your code here
+  let sum;
+  let max = 0;
+  mouseArray.forEach((mouse) => {
+    keyBoardArray.forEach((key) => {
+      sum = mouse + key;
+      if (sum <= budget) {
+        if (sum >= max) {
+          max = sum;
+        }
+      }
+    });
+  });
+  return max;
 };
 
 module.exports = { arrInc, roundDecimals, employeesBonus, mostExpensive };
