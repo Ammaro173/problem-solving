@@ -58,7 +58,22 @@ const customerAndAge = (obj) => {
 // -------------------------------------------------------------------------------------------------------
 
 const getEntries = (obj) => {
-  // no enought time yet 1:08 AM :)
+  let entries = Object.entries(obj);
+  let arr = [];
+  let str = '';
+  for (let i = 0; i < entries.length; i++) {
+    for (let x = 0; x < entries[i].length; x++) {
+      if (x == 0) {
+        str = str.concat(entries[i][x], ':');
+      } else {
+        str = str.concat(' ', entries[i][x]);
+      }
+    }
+    arr[i] = str;
+    str = '';
+  }
+
+  return arr;
 };
 
 // -------------------------------------------------------------------------------------------------------
@@ -99,7 +114,23 @@ const courses = [
 const getInfo = (arr) => {
   let coursesName = [];
   let studentsName = [];
-  // no enought time yet 1:08 AM :)
+  let test = [];
+  let entries = [];
+  for (let i = 0; i < arr.length; i++) {
+    entries = Object.entries(arr[i]);
+    for (let x = 0; x < entries.length; x++) {
+      if (x == 0) {
+        coursesName.push(entries[0][1]);
+      } else if (x == 2) {
+        test.push(entries[2][1]);
+      }
+    }
+  }
+  for (let y = 0; y < test.length; y++) {
+    for (let n = 0; n < test[y].length; n++) {
+      studentsName.push(test[y][n]);
+    }
+  }
 
   return { coursesName, studentsName };
 };
@@ -123,9 +154,25 @@ const getInfo = (arr) => {
 //  ------------------------------------------------------------------------------------------------------
 
 const getStudents = (arr) => {
-  // no enought time yet  1:08 AM :)
+  // write your code here
+  function Result(name, course) {
+    this.Student = name;
+    this.course = course;
+  }
+  let studentsInfo = [];
+  // using for of
+  for (const allStudents of arr) {
+    let newObj = {};
+    for (const courseObj of courses) {
+      if (courseObj.Students.includes(allStudents)) {
+        newObj['Student'] = allStudents;
+        newObj['course'] = courseObj.course;
+      }
+    }
+    studentsInfo.push(newObj);
+  }
+  return studentsInfo;
 };
-
 module.exports = {
   customerAndAge,
   getEntries,
