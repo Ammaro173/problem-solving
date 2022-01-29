@@ -1,8 +1,8 @@
 {
-    "name": "ProblemSolving",
+    "name": "Regex-Recursion",
     "version": "1.0.0",
     "description": "",
-    "main": "Challenge06.js",
+    "main": "",
     "scripts": {
       "test": "jest"
     },
