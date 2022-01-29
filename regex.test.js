@@ -37,7 +37,7 @@ function imagesSearcher(text) {
     return [];
   }
 }
-
+//
 describe('Test capitalA', () => {
   test('It should return true if the input has uppercase and lowercase characters (no numbers and symbols) and it should end with capital A else return false ', () => {
     expect(capitalA('Hello world A')).toStrictEqual(true);
